@@ -1,0 +1,13 @@
+<h1>Главная</h1>
+<nav>
+    <ul>
+        <li><a href="/login">Войти</a></li>
+        <li><a href="/signup">Зарегистрироваться</a></li>
+    </ul>
+</nav>
+{{#each posts}}
+    {{this.title}}
+    {{this.body}}
+    {{this.author}}
+    {{this.createdAt}}
+{{/each}}
