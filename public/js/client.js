@@ -32,7 +32,7 @@ document.forms.loginForm?.addEventListener('submit', async e => {
     if (response.status !== 200) {
         return failLogin(e.target);
     }
-
+		console.log(response);
     return window.location.assign('/');
 });
 

@@ -1,11 +1,37 @@
+<h1 class="title">Вход</h1>
+
 <form action="/login" method="post" id="loginForm">
-    <label>
-        Логин
-        <input type="text" name="login" placeholder="Введите логин">
-    </label>
-    <label>
-        Пароль
-        <input type="password" name="password" placeholder="Введите пароль">
-    </label>
-    <input type="submit" value="Войти">
+	<div class="field">
+		<label class="label">Логин</label>
+		<div class="control has-icons-left has-icons-right">
+			<input class="input" name="login" type="text" placeholder="Логин">
+			<span class="icon is-small is-left">
+				<i class="fas fa-user"></i>
+			</span>
+			{{!-- <span class="icon is-small is-right">
+				<i class="fas fa-check"></i>
+			</span> --}}
+		</div>
+		{{!-- <p class="help is-success">This username is available</p> --}}
+	</div>
+
+	<div class="field">
+		<label class="label">Пароль</label>
+		<div class="control has-icons-left has-icons-right">
+			<input class="input" name="password" type="password" placeholder="Пароль">
+			<span class="icon is-small is-left">
+				<i class="fas fa-key"></i>
+			</span>
+			{{!-- <span class="icon is-small is-right">
+				<i class="fas fa-exclamation-triangle"></i>
+			</span> --}}
+		</div>
+		{{!-- <p class="help is-danger">This email is invalid</p> --}}
+	</div>
+
+	<div class="field">
+		<div class="control">
+			<input type="submit" class="button is-link" value="Войти">
+		</div>
+	</div>
 </form>

@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
+const Post = require('../models/post');
 
 const router = express.Router();
 
@@ -14,8 +15,10 @@ const serializeUser = user => ({
     login: user.login,
 });
 
-router.get('/', (req, res) => {
-    res.render('index', { posts: [] });
+router.get('/', async (req, res) => {
+	const posts = await Post.find();
+	const isLoggedIn = false;
+  res.render('index', { posts, isLoggedIn });
 });
 
 router.
@@ -33,7 +36,7 @@ router.
             if (!isValidPassword) {
                 return failAuth(res);
             }
-            req.session.user = serializeUser(user);
+						req.session.user = serializeUser(user);
         } catch (error) {
             console.error(error);
             return failAuth(res);
