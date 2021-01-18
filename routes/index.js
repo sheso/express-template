@@ -36,7 +36,7 @@ router.
             if (!isValidPassword) {
                 return failAuth(res);
             }
-						req.session.user = serializeUser(user);
+			req.session.user = serializeUser(user);
         } catch (error) {
             console.error(error);
             return failAuth(res);

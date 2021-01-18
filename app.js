@@ -7,7 +7,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-const indexRouter = require('./routes');
+const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 
@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(session({
+    name: app.get('session cookie name'),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,

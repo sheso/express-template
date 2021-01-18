@@ -5,11 +5,6 @@ const failLogin = loginForm => {
     loginForm.login.reportValidity();
 };
 
-const networkError = form => {
-    form.setCustomValidity('Сетевая ошибка. Попробуйте позже');
-    form.reportValidity();
-}
-
 document.forms.loginForm?.addEventListener('submit', async e => {
     e.preventDefault();
     const { method, action } = e.target;
