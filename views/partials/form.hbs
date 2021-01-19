@@ -1,25 +1,30 @@
 <div class="column is-one-third">
-	<form action="/posts/new" method="post" id="newPostForm">
+	<form action="{{action}}" method="post" id="newPostForm">
 		<div class="field">
 			<label class="label">Заголовок</label>
 			<div class="control">
-				<input class="input" type="text" name="title" placeholder="Дорогой дневник...">
+				{{#if isEdit}}
+					<input class="input" type="text" name="title" value="{{title}}">
+				{{else}}
+					<input class="input" type="text" name="title" placeholder="Дорогой дневник...">
+				{{/if}}
 			</div>
 		</div>
 
 		<div class="field">
 			<label class="label">Пост</label>
 			<div class="control">
-				<textarea class="textarea" name="body" placeholder="Сегодня я снова тебе пишу..."></textarea>
+				{{#if isEdit}}
+					<textarea class="textarea" name="body">{{body}}</textarea>
+				{{else}}
+					<textarea class="textarea" name="body" placeholder="Сегодня я снова тебе пишу..."></textarea>
+				{{/if}}
 			</div>
 		</div>
 
 		<div class="field is-grouped">
 			<div class="control">
 				<button class="button is-link">Отправить</button>
-			</div>
-			<div class="control">
-				<button class="button is-link is-light">Очистить</button>
 			</div>
 		</div>
 	</form>

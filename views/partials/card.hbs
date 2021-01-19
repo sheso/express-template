@@ -2,7 +2,7 @@
 	<div class="card">
 		<header class="card-header">
 			<p class="card-header-title">
-				{{this.title}}
+				<a href="/posts/{{this._id}}">{{this.title}}</a>
 			</p>
 		</header>
 		<div class="card-content">
@@ -15,7 +15,7 @@
 							<time>{{this.createdAt}}</time>
 						</div>
 						<div class="level-item">
-							<p class="subtitle is-6">{{this.author}}</p>
+							<p class="subtitle is-6">{{this.author.name}}</p>
 						</div>
 					</div>
 					<div class="level-right">
@@ -31,8 +31,8 @@
 		</div>
 		{{#if this.isAuthor}}
 		<footer class="card-footer">
-			<a href="#" class="card-footer-item">Редактировать</a>
-			<a href="#" class="card-footer-item">Удалить</a>
+			<a href="/posts/edit/{{this._id}}" class="card-footer-item">Редактировать</a>
+			<a href="/posts/delete/{{this._id}}" class="card-footer-item">Удалить</a>
 		</footer>
 		{{/if}}
 	</div>

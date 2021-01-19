@@ -1,0 +1,38 @@
+<h1 class="title">Пост</h1>
+
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      {{title}}
+    </p>
+  </header>
+  <div class="card-content">
+    <div class="content">
+      {{body}}
+      <div class="level">
+					<div class="level-left">
+						<div class="level-item">
+							<time>{{createdAt}}</time>
+						</div>
+						<div class="level-item">
+							<p class="subtitle is-6">{{author}}</p>
+						</div>
+					</div>
+					<div class="level-right">
+						<div class="icon-text">
+							<div class="icon">
+								<span class="fa fa-heart"></span>
+							</div>
+							<span class="likes-count">{{likesCount}}</span>
+						</div>
+					</div>
+				</div>
+    </div>
+  </div>
+  {{#if isAuthor}}
+		<footer class="card-footer">
+			<a href="/posts/edit/{{_id}}" class="card-footer-item">Редактировать</a>
+			<a href="/posts/delete/{{_id}}" class="card-footer-item">Удалить</a>
+		</footer>
+		{{/if}}
+</div>

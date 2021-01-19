@@ -10,10 +10,10 @@ const { failAuth, serializeUser, formatPost } = require('../helpers');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-	const rawPosts = await Post.find();
+	const rawPosts = await Post.find().populate('author');
 	const posts = await Promise.all(rawPosts.map(post => formatPost(post, req.session)));
 	console.log(posts);
-  res.render('index', { posts });
+  res.render('index', { posts, action: '/posts/new', formTitle: 'Добавить пост'});
 });
 
 router.
@@ -31,7 +31,7 @@ router.
             if (!isValidPassword) {
                 return failAuth(res);
             }
-			req.session.user = serializeUser(user);
+						req.session.user = serializeUser(user);
         } catch (error) {
             console.error(error);
             return failAuth(res);

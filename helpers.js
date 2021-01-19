@@ -14,15 +14,14 @@ const formatDate = date => {
 	const fDate = new Date(date);
 	const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 	const formattedDate = `${fDate.getUTCDate()} ${months[fDate.getUTCMonth()]} ${fDate.getUTCFullYear()}`;
-	console.log(formattedDate);
 	return formattedDate;
 }
 
+// This function is async!
 const formatPost = async (post, session) => {
 	const fPost = JSON.parse(JSON.stringify(post));
-	fPost.isAuthor = session?.user?.id ? session.user.id === fPost.author : false;
-	const author = await User.findById(fPost.author);
-	fPost.author = author.name;
+	console.log('helpers', fPost);
+	fPost.isAuthor = session?.user?.id ? session.user.id === fPost.author._id : false;
 	fPost.createdAt = formatDate(fPost.createdAt);
 	fPost.likesCount = fPost.likes.length;
 	return fPost;
