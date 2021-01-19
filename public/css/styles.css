@@ -6,3 +6,7 @@
 #logo:hover {
 	color: lightcoral;
 }
+
+.like-button {
+	cursor: pointer;
+}

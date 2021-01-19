@@ -22,6 +22,7 @@ const formatPost = async (post, session) => {
 	const fPost = JSON.parse(JSON.stringify(post));
 	fPost.isAuthor = isAuthor(session, fPost.author._id);
 	fPost.createdAt = formatDate(fPost.createdAt);
+	fPost.userHasLiked = post.likes.some(userId => userId.toString() === session?.user?.id);
 	fPost.likesCount = fPost.likes.length;
 	return fPost;
 }

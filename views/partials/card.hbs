@@ -19,11 +19,17 @@
 						</div>
 					</div>
 					<div class="level-right">
-						<div class="icon-text">
-							<div class="icon">
-								<span class="fa fa-heart"></span>
-							</div>
-							<span class="likes-count">{{this.likesCount}}</span>
+						<div data-like="{{_id}}" class="icon-text like-icon-text">
+							{{#if this.userHasLiked}}
+							<span data-like="{{_id}}" class="icon like-icon has-text-danger">
+								<i class="fas fa-heart like-button"></i>
+							</span>
+							{{else}}
+							<span data-like="{{_id}}" class="icon like-icon">
+								<i class="fas fa-heart like-button"></i>
+							</span>
+							{{/if}}
+							<span class="likes-count" id="likes-count-{{_id}}">{{likesCount}}</span>
 						</div>
 					</div>
 				</div>

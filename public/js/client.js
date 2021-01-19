@@ -99,3 +99,28 @@ if (document.forms.signupForm) {
         e.target.checkValidity();
     }));
 }
+
+// LIKE HANDLING
+
+const container = document.querySelector('.container');
+
+container.addEventListener('click', async e => {
+	if (e.target.classList.contains('like-button') 
+	|| e.target.tagName === 'path'
+	|| e.target.classList.contains('like-icon') 
+	|| e.target.classList.contains('like-icon-text') 
+	) {
+		e.stopPropagation();
+		const targetElement = e.target.classList.contains('like-icon-text') ? e.target : e.target.closest('div');
+		const postId = targetElement.dataset.like;
+		const response = await fetch(`/posts/${postId}/like`);
+		const data = await response.json();
+
+		const likeIcon = targetElement.querySelector('.like-icon');
+		const likeCount = targetElement.querySelector('.likes-count');
+
+		console.log(data);
+		likeIcon.classList.toggle('has-text-danger');
+		likeCount.innerText = data.likesCount;
+	}
+});
