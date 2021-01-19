@@ -42,3 +42,11 @@
 		</footer>
 		{{/if}}
 </div>
+
+<div class="comments">
+	{{#each comments}}
+		{{> comment}}
+	{{/each}}
+</div>
+
+{{> commentForm}}

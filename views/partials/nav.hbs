@@ -1,24 +1,15 @@
 <nav class="navbar is-active" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item">
+    <a class="navbar-item" href="/">
       <p id="logo">Sonya</p>
     </a>
   </div>
 
   <div class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item" href="/">
-        Главная
-      </a>
-			{{!-- <a class="navbar-item">
-        О нас
-      </a> --}}
-    </div>
-
     <div class="navbar-end">
 			{{#if username}}
 			<div class="navbar-item">
-				Привет, {{username}}!
+				<a href="/account">{{username}}</a>
 			</div>
 			<div class="navbar-item">
         <div class="buttons">

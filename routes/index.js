@@ -12,7 +12,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 	const rawPosts = await Post.find().populate('author');
 	const posts = await Promise.all(rawPosts.map(post => formatPost(post, req.session)));
-  res.render('index', { posts, action: '/posts/new', formTitle: 'Добавить пост'});
+  res.render('index', { posts, action: '/posts/new', formTitle: 'Добавить пост', title: 'Главная' });
 });
 
 router.
@@ -63,6 +63,12 @@ router.get('/logout', (req, res, next) => {
         res.clearCookie(req.app.get('session cookie name'));
         return res.redirect('/');
     });
+});
+
+router.get('/account', authMiddleware, async (req, res) => {
+	const rawPosts = await Post.find({author: req.session.user.id});
+	const posts = await Promise.all(rawPosts.map(post => formatPost(post, req.session)));
+	res.render('index', { posts, action: '/posts/new', formTitle: 'Добавить пост', title: 'Мои посты' });
 });
 
 module.exports = router;

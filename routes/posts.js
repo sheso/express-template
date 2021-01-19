@@ -36,6 +36,17 @@ router.get('/:id/like', authMiddleware, async (req, res) => {
 	}
 });
 
+router.post('/:id/comment', authMiddleware, async (req, res) => {
+	const { body } = req.body;
+	const comment = new Post({
+    body: body,
+    author: req.session.user.id,
+		parent: req.params.id,
+	});
+	await comment.save();
+	res.redirect(`/posts/${req.params.id}`);
+});
+
 router
 .route('/edit/:id')
 .get(async (req, res) => {
@@ -65,10 +76,20 @@ router.get('/delete/:id', async (req, res) => {
 	return res.redirect('/');
 });
 
+router.get('/comment/:id/delete', authMiddleware, async (req, res) => {
+	const post = await Post.findById(req.params.id);
+	if (isAuthor(req.session, post.author.toString())) {
+		await Post.findByIdAndDelete(req.params.id);
+	}
+	return res.redirect(`/posts/${post.parent}`);
+});
+
 router.get('/:id', async (req, res) => {
 	const post = await Post.findById(req.params.id).populate('author');
 	const formattedPost = await formatPost(post, req.session);
-	res.render('post', formattedPost);
+	const comments = await Post.find({parent: req.params.id}).populate('author');
+	console.log(comments);
+	res.render('post', { ...formattedPost, comments, action: `/posts/${req.params.id}/comment` });
 });
 
 module.exports = router;

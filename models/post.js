@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
-    title: { type: String, required: true },
+    title: String,
     body: String,
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     createdAt: { type: Date, default: Date.now },
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		parent: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
 });
 
 const Post = mongoose.model('Post', postSchema);

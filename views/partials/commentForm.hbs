@@ -1,0 +1,20 @@
+<div class="column is-two-thirds">
+	<form action="{{action}}" method="post" id="newCommentForm">
+		<div class="field">
+			<label class="label">Комментарий</label>
+			<div class="control">
+				{{#if isEdit}}
+					<input class="input" name="body">{{body}}</input>
+				{{else}}
+					<input class="input" name="body" placeholder="В интернете кто-то неправ"></input>
+				{{/if}}
+			</div>
+		</div>
+
+		<div class="field is-grouped">
+			<div class="control">
+				<button class="button is-link">Отправить</button>
+			</div>
+		</div>
+	</form>
+</div>
