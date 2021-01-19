@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../models/user');
 const Post = require('../models/post');
 const { authMiddleware } = require('../middlewares');
-const { formatPost } = require('../helpers');
+const { formatPost, isAuthor } = require('../helpers');
 
 const router = express.Router();
 
@@ -32,21 +32,29 @@ router
 	.route('/edit/:id')
 		.get(async (req, res) => {
 			let post = await Post.findById(req.params.id);
-			post = JSON.parse(JSON.stringify(post));
-			console.log(post);
-			res.render('addPostForm', { ...post, formTitle: 'Редактировать пост', action: `/posts/edit/${req.params.id}`, isEdit: true});
+			if (isAuthor(req.session, post.author.toString())) {
+				post = JSON.parse(JSON.stringify(post));
+				return res.render('addPostForm', { ...post, formTitle: 'Редактировать пост', action: `/posts/edit/${req.params.id}`, isEdit: true});
+			} 
+			res.redirect(`/posts/${req.params.id}`);
 		})
 		.post(async (req, res) => {
-			await Post.findOneAndUpdate(
-				{_id: req.params.id}, 
-				{title: req.body.title, body: req.body.body}
-			);
+			const post = await Post.findById(req.params.id);
+			if (isAuthor(req.session, post.author.toString())) {
+				await Post.findOneAndUpdate(
+					{_id: req.params.id}, 
+					{title: req.body.title, body: req.body.body}
+				);
+			}	
 			res.redirect('/');
 		});
 
-router.get('/delete/:id', (req, res) => {
-	Post.findByIdAndDelete(req.params.id);
-	res.redirect('/');
+router.get('/delete/:id', async (req, res) => {
+	const post = await Post.findById(req.params.id);
+	if (isAuthor(req.session, post.author.toString())) {
+		await Post.findByIdAndDelete(req.params.id);
+	}
+	return res.redirect('/');
 });
 		
 module.exports = router;

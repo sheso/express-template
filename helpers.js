@@ -20,11 +20,14 @@ const formatDate = date => {
 // This function is async!
 const formatPost = async (post, session) => {
 	const fPost = JSON.parse(JSON.stringify(post));
-	console.log('helpers', fPost);
-	fPost.isAuthor = session?.user?.id ? session.user.id === fPost.author._id : false;
+	fPost.isAuthor = isAuthor(session, fPost.author._id);
 	fPost.createdAt = formatDate(fPost.createdAt);
 	fPost.likesCount = fPost.likes.length;
 	return fPost;
 }
 
-module.exports = { failAuth, serializeUser, formatPost };
+const isAuthor = (session, authorId) => {
+	return session?.user?.id === authorId; 
+};
+
+module.exports = { failAuth, serializeUser, formatPost, isAuthor };

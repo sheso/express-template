@@ -12,7 +12,6 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 	const rawPosts = await Post.find().populate('author');
 	const posts = await Promise.all(rawPosts.map(post => formatPost(post, req.session)));
-	console.log(posts);
   res.render('index', { posts, action: '/posts/new', formTitle: 'Добавить пост'});
 });
 
