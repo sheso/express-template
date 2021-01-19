@@ -1,0 +1,8 @@
+#logo {
+	font-family: 'Kaushan Script', cursive;
+	font-size: 3em;
+}
+
+#logo:hover {
+	color: lightcoral;
+}

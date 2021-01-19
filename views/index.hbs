@@ -3,55 +3,11 @@
 	<div class="columns">
 		<div class="column">
 			{{#each posts}}
-				<div class="card">
-					<header class="card-header">
-						<p class="card-header-title">
-							{{this.title}}
-						</p>
-					</header>
-					<div class="card-content">
-						<div class="content">
-							{{this.body}}
-							<br>
-							<time>{{this.createdAt}}</time>
-						</div>
-					</div>
-					<div class="media-content">
-							<p class="title is-4">{{this.author}}</p>
-						</div>
-					<footer class="card-footer">
-						<a href="#" class="card-footer-item">Редактировать</a>
-						<a href="#" class="card-footer-item">Удалить</a>
-					</footer>
-				</div>
+				{{> card}}
 			{{/each}}
 		</div>
-		<div class="column is-one-third">
-			<form action="/posts/new" method="post" id="newPostForm">
-				<div class="field">
-					<label class="label">Заголовок поста</label>
-					<div class="control">
-						<input class="input" type="text" name="title" placeholder="Дорогой дневник...">
-					</div>
-				</div>
-
-			
-				<div class="field">
-					<label class="label">Пост</label>
-					<div class="control">
-						<textarea class="textarea" name="body" placeholder="Сегодня я снова тебе пишу..."></textarea>
-					</div>
-				</div>
-
-				<div class="field is-grouped">
-					<div class="control">
-						<button class="button is-link">Отправить</button>
-					</div>
-					<div class="control">
-						<button class="button is-link is-light">Очистить</button>
-					</div>
-				</div>
-			</form>
-		</div>
+		{{#if username}}
+			{{> form}}
+		{{/if}}
 	</div>
 </div>

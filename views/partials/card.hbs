@@ -1,0 +1,39 @@
+<div class="block">
+	<div class="card">
+		<header class="card-header">
+			<p class="card-header-title">
+				{{this.title}}
+			</p>
+		</header>
+		<div class="card-content">
+			<div class="content">
+				{{this.body}}
+				<hr>
+				<div class="level">
+					<div class="level-left">
+						<div class="level-item">
+							<time>{{this.createdAt}}</time>
+						</div>
+						<div class="level-item">
+							<p class="subtitle is-6">{{this.author}}</p>
+						</div>
+					</div>
+					<div class="level-right">
+						<div class="icon-text">
+							<div class="icon">
+								<span class="fa fa-heart"></span>
+							</div>
+							<span class="likes-count">{{this.likesCount}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{#if this.isAuthor}}
+		<footer class="card-footer">
+			<a href="#" class="card-footer-item">Редактировать</a>
+			<a href="#" class="card-footer-item">Удалить</a>
+		</footer>
+		{{/if}}
+	</div>
+</div>

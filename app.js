@@ -6,14 +6,21 @@ const logger = require('morgan');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const redis = require('redis');
+
+// Setting up Redis for storing sessions
+let RedisStore = require('connect-redis')(session);
+let redisClient = redis.createClient();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 
+const { userLocalsAssign } = require('./middlewares');
+
 const app = express();
 mongoose.connect(process.env.DB_URI, { useUnifiedTopology: true, useNewUrlParser: true }, () => {
-    console.log('Mongo is up, my lord');
+	console.log('Mongo is up, my lord');
 });
 
 // Setting up hbs
@@ -31,12 +38,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(session({
-    name: app.get('session cookie name'),
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false, maxAge: 1e10 }
+	store: new RedisStore({ client: redisClient }),
+	name: app.get('session cookie name'),
+	secret: process.env.SESSION_SECRET,
+	resave: false,
+	saveUninitialized: false,
+	cookie: { secure: false, maxAge: 1e10 }
 }));
+
+app.use(userLocalsAssign);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

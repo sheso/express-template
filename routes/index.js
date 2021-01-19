@@ -4,21 +4,16 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const Post = require('../models/post');
 
+const { authMiddleware } = require('../middlewares');
+const { failAuth, serializeUser, formatPost } = require('../helpers');
+
 const router = express.Router();
 
-const failAuth = res => {
-    res.status(401).end();
-};
-
-const serializeUser = user => ({
-    id: user._id,
-    login: user.login,
-});
-
 router.get('/', async (req, res) => {
-	const posts = await Post.find();
-	const isLoggedIn = false;
-  res.render('index', { posts, isLoggedIn });
+	const rawPosts = await Post.find();
+	const posts = await Promise.all(rawPosts.map(post => formatPost(post, req.session)));
+	console.log(posts);
+  res.render('index', { posts });
 });
 
 router.
@@ -51,7 +46,7 @@ router.
     }).post(async (req, res) => {
         const { name, login, password } = req.body;
         try {
-            const saltRounds = Number(process.env.SALT_ROUNDS ?? 8);
+            const saltRounds = 10;
             const hashedPassword = await bcrypt.hash(password, saltRounds);
             const user = new User({ name, login, password: hashedPassword });
             await user.save();
